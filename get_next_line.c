@@ -161,6 +161,7 @@ char  *strjoin(char *previous, char *buffer)
     ++i;
   }
   j = 0;
+  // copy buffer into allocated space
   while (i < len)
   {
     new_string[i] = buffer[0];
@@ -172,8 +173,26 @@ char  *strjoin(char *previous, char *buffer)
   return (new_string);
 }
 
+char  *move_buffer(char *buffer, size_t size)
+{
+  size_t  i;
+  size_t  j;
+
+  i = 0;
+  while (buffer[i] && buffer[i] != '\n')
+    ++i;
+  j = 0;
+  while (buffer[i])
+  {
+    buffer[j] = buffer[i];
+    ++i;
+    ++j;
+  }
+  buffer[j] = 0;
+  return (buffer);
+}
+
 // read into buffer if buffer is 'clear'
-// copy buffer into allocated space
 // 'clear' buffer
 
 /*
