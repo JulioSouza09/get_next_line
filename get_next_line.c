@@ -124,9 +124,55 @@ char  *get_next_line(int fd)
   return (result);
 }
 
-// read into buffer
-// get buffer len until '\n'
+// get line len until '\n' previous allocated space + buffer
+size_t  get_len(char *previous, char *buffer)
+{
+  size_t  i;
+  size_t  j;
+
+  i = 0;
+  // previous buffer content len
+  while (previous && previous[i])
+    ++i;
+  j = 0;
+  // buffer len until '\0' or '\n'
+  while (buffer && buffer[i] && buffer[i - 1] != '\n')
+    ++j;
+  return (i + j);
+}
+
 // allocate space with buffer len
+char  *strjoin(char *previous, char *buffer)
+{
+  size_t  len;
+  size_t  i;
+  size_t  j;
+  char    *new_string;
+
+  len = get_len(previous, buffer);
+  new_string = malloc(sizeof(char) * (len + 1));
+  if (!new_string)
+    return (NULL);
+  i = 0;
+  // copy previous string to new string
+  while (previous && previous[i])
+  {
+    new_string[i] = previous[i]; 
+    ++i;
+  }
+  j = 0;
+  while (i < len)
+  {
+    new_string[i] = buffer[0];
+    ++i;
+    ++j;
+  }
+  new_string[i] = 0;
+  free(previous);
+  return (new_string);
+}
+
+// read into buffer if buffer is 'clear'
 // copy buffer into allocated space
 // 'clear' buffer
 
