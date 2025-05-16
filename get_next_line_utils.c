@@ -6,103 +6,96 @@
 /*   By: jcesar-s <jcesar-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:02:12 by jcesar-s          #+#    #+#             */
-/*   Updated: 2025/05/14 14:02:13 by jcesar-s         ###   ########.fr       */
+/*   Updated: 2025/05/16 15:20:09 by jcesar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	len;
-
-	len = 0;
-	while (str[len] != '\0')
-		len++;
-	return (len);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+size_t	is_eol(char *str)
 {
 	size_t	i;
-	char	*arr;
 
-	if (!len || !*s || start >= ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > ft_strlen(&s[start]))
-		len = ft_strlen(&s[start]);
-	arr = malloc(sizeof(char) * (len + 1));
-	if (!arr)
-		return (NULL);
 	i = 0;
-	while (s[start + i] && i < len)
+	while (str[i])
 	{
-		arr[i] = s[start + i];
+		if (str[i] == '\n')
+			return (1);
 		++i;
 	}
-	arr[i] = 0;
-	return (arr);
+	return (0);
 }
 
-void	*ft_memmove(void *dest, const void *src, size_t n)
+// get line len until '\n' previous allocated space + buffer
+size_t  get_len(char *previous, char *buffer)
 {
-	unsigned char	*dest_b;
-	unsigned char	*src_b;
-	size_t			i;
+  size_t  i;
+  size_t  j;
 
-	dest_b = (unsigned char *)dest;
-	src_b = (unsigned char *)src;
-	if (n == 0)
-		return (dest);
-	if (dest > src)
-	{
-		i = n;
-		while (i-- > 0)
-			dest_b[i] = src_b[i];
-		return (dest);
-	}
   i = 0;
-	while (i < n)
-	{
-		dest_b[i] = src_b[i];
-		i++;
-	}
-	return (dest);
+  // previous buffer content len
+  while (previous && previous[i])
+    ++i;
+  j = 0;
+  // buffer len until '\0' or '\n'
+  while (buffer && buffer[j] && buffer[j - 1] != '\n')
+    ++j;
+  return (i + j);
 }
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+// allocate space with buffer len
+char  *strjoin(char *previous, char *buffer)
 {
-	size_t	dst_len;
-	size_t	src_len;
-	size_t	i;
+  size_t  len;
+  size_t  i;
+  size_t  j;
+  char    *new_string;
 
-	dst_len = ft_strlen(dst);
-	src_len = ft_strlen(src);
-	if (size == 0)
-		return (src_len);
-	if (dst_len >= size)
-		return (src_len + size);
-	i = 0;
-	while (src[i] && (size - dst_len - 1) > i)
-	{
-		dst[i + dst_len] = src[i];
-		i++;
-	}
-	dst[i + dst_len] = '\0';
-	return (dst_len + src_len);
+  len = get_len(previous, buffer);
+  new_string = malloc(sizeof(char) * (len + 1));
+  if (!new_string)
+    return (NULL);
+  i = 0;
+  // copy previous string to new string
+  while (previous && previous[i])
+  {
+    new_string[i] = previous[i]; 
+    ++i;
+  }
+  j = 0;
+  // copy buffer into allocated space
+  while (i < len)
+  {
+    new_string[i] = buffer[j];
+    ++i;
+    ++j;
+  }
+  new_string[i] = 0;
+  free(previous);
+  return (new_string);
 }
 
-char	*ft_strdup(const char *s)
+char  *move_buffer(char *buffer)
 {
-	long	len;
-	char	*arr;
+  size_t  i;
+  size_t  j;
 
-	len = ft_strlen(s) + 1;
-	arr = malloc(sizeof(char) * len);
-	if (arr == NULL)
-		return (NULL);
-	while (len--)
-		arr[len] = s[len];
-	return (arr);
+  i = 0;
+  // find '\n' position. Otherwise, find '\0'
+  while (buffer[i] && buffer[i] != '\n')
+    ++i;
+  j = 0;
+  // in case of finding '\n'
+  while (buffer[i])
+  {
+    buffer[j] = buffer[++i];
+    ++j;
+  }
+  // otherwise, clear buffer first position
+  buffer[j] = 0;
+  return (buffer);
 }
 
+// read into buffer if buffer is 'clear'
+
+// 'clear' buffer
