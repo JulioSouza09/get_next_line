@@ -6,7 +6,7 @@
 /*   By: jcesar-s <jcesar-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:05:26 by jcesar-s          #+#    #+#             */
-/*   Updated: 2025/05/16 15:19:52 by jcesar-s         ###   ########.fr       */
+/*   Updated: 2025/05/23 14:43:43 by jcesar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char  *get_next_line(int fd)
   return (result);
 }
 
+/*
 int main(int argc, char **argv)
 {
   int fd;
@@ -55,3 +56,4 @@ int main(int argc, char **argv)
   close(fd);
   return (0);
 }
+*/
