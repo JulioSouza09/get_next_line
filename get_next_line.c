@@ -6,42 +6,41 @@
 /*   By: jcesar-s <jcesar-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:05:26 by jcesar-s          #+#    #+#             */
-/*   Updated: 2025/05/24 14:59:08 by jcesar-s         ###   ########.fr       */
+/*   Updated: 2025/05/24 15:13:29 by jcesar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "get_next_line.h"
 
-char  *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-  static char buf[BUFFER_SIZE + 1];
-  char        *result;
-  int         bytes_read;
+	static char	buf[BUFFER_SIZE + 1];
+	char		*result;
+	int			bytes_read;
 
-  if (fd < 0 || BUFFER_SIZE <= 0)
-    return (NULL);
-  result = NULL;
-  bytes_read = 1;
-  while (bytes_read)
-  {
-    if (!buf[0])
-      bytes_read = read(fd, buf, BUFFER_SIZE);
-    if ((!buf[0] && !bytes_read && !result) || bytes_read == -1)
-    {
-      free(result);
-      return (NULL);
-    }
-    result = strjoin(result, buf);
-	if (!result)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-  	move_buffer(buf);
-    if (is_eol(result))
-      break ;
-  }
-  return (result);
+	result = NULL;
+	bytes_read = 1;
+	while (bytes_read)
+	{
+		if (!buf[0])
+			bytes_read = read(fd, buf, BUFFER_SIZE);
+		if ((!buf[0] && !bytes_read && !result) || bytes_read == -1)
+		{
+			free(result);
+			return (NULL);
+		}
+		result = strjoin(result, buf);
+		if (!result)
+			return (NULL);
+		move_buffer(buf);
+		if (is_eol(result))
+			break ;
+	}
+	return (result);
 }
-
 
 // int main(int argc, char **argv)
 // {
