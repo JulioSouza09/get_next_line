@@ -6,7 +6,7 @@
 /*   By: jcesar-s <jcesar-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:05:26 by jcesar-s          #+#    #+#             */
-/*   Updated: 2025/05/23 14:43:43 by jcesar-s         ###   ########.fr       */
+/*   Updated: 2025/05/23 19:36:09 by jcesar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ char  *get_next_line(int fd)
       return (NULL);
     }
     result = strjoin(result, buf);
+  	move_buffer(buf);
     if (is_eol(result))
       break ;
-    move_buffer(buf);
   }
   return (result);
 }
 
-/*
+
 int main(int argc, char **argv)
 {
   int fd;
@@ -53,7 +53,14 @@ int main(int argc, char **argv)
 
   char  *result = get_next_line(fd);
   printf("%s", result);
+  free(result);
+  result = get_next_line(fd);
+  printf("%s", result);
+  free(result);
+  result = get_next_line(fd);
+  free(result);
+  printf("%s", result);
   close(fd);
   return (0);
 }
-*/
+

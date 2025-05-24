@@ -6,7 +6,7 @@
 /*   By: jcesar-s <jcesar-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:02:12 by jcesar-s          #+#    #+#             */
-/*   Updated: 2025/05/16 15:20:09 by jcesar-s         ###   ########.fr       */
+/*   Updated: 2025/05/23 19:29:32 by jcesar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char  *strjoin(char *previous, char *buffer)
   len = get_len(previous, buffer);
   new_string = malloc(sizeof(char) * (len + 1));
   if (!new_string)
-    return (NULL);
+    return (free(previous), NULL);
   i = 0;
   // copy previous string to new string
   while (previous && previous[i])
