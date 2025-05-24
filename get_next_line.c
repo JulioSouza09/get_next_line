@@ -6,7 +6,7 @@
 /*   By: jcesar-s <jcesar-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:05:26 by jcesar-s          #+#    #+#             */
-/*   Updated: 2025/05/24 14:40:49 by jcesar-s         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:59:08 by jcesar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char  *get_next_line(int fd)
       return (NULL);
     }
     result = strjoin(result, buf);
+	if (!result)
+		return (NULL);
   	move_buffer(buf);
     if (is_eol(result))
       break ;
