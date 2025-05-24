@@ -6,7 +6,7 @@
 /*   By: jcesar-s <jcesar-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 14:02:12 by jcesar-s          #+#    #+#             */
-/*   Updated: 2025/05/23 19:29:32 by jcesar-s         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:28:47 by jcesar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,11 @@ char  *move_buffer(char *buffer)
     ++j;
   }
   // otherwise, clear buffer first position
-  buffer[j] = 0;
+  while (buffer[j])
+  {
+  	buffer[j] = 0;
+	++j;
+  }
   return (buffer);
 }
 

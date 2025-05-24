@@ -6,7 +6,7 @@
 /*   By: jcesar-s <jcesar-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:05:26 by jcesar-s          #+#    #+#             */
-/*   Updated: 2025/05/24 12:51:08 by jcesar-s         ###   ########.fr       */
+/*   Updated: 2025/05/24 14:40:49 by jcesar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char  *get_next_line(int fd)
   {
     if (!buf[0])
       bytes_read = read(fd, buf, BUFFER_SIZE);
-    if (!buf[0] && (!bytes_read || bytes_read < 0) && !result)
+    if ((!buf[0] && !bytes_read && !result) || bytes_read == -1)
     {
       free(result);
       return (NULL);
@@ -44,6 +44,7 @@ char  *get_next_line(int fd)
 // int main(int argc, char **argv)
 // {
 //   int fd;
+//   char *result;
 // 
 //   if (argc != 2)
 //     return (1);
@@ -51,15 +52,11 @@ char  *get_next_line(int fd)
 //   if (fd < 0)
 //     return (2);
 // 
-//   char  *result = get_next_line(fd);
-//   printf("%s", result);
-//   free(result);
-//   result = get_next_line(fd);
-//   printf("%s", result);
-//   free(result);
-//   result = get_next_line(fd);
-//   printf("%s", result);
-//   free(result);
+//   while ((result = get_next_line(fd)))
+//   {
+// 	  printf("%s", result);
+// 	  free(result);
+//   }
 //   close(fd);
 //   return (0);
 // }
