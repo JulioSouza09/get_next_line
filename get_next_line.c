@@ -6,7 +6,7 @@
 /*   By: jcesar-s <jcesar-s@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 13:05:26 by jcesar-s          #+#    #+#             */
-/*   Updated: 2025/05/23 19:36:09 by jcesar-s         ###   ########.fr       */
+/*   Updated: 2025/05/24 12:51:08 by jcesar-s         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char  *get_next_line(int fd)
   char        *result;
   int         bytes_read;
 
-  if (fd < 0)
+  if (fd < 0 || BUFFER_SIZE <= 0)
     return (NULL);
   result = NULL;
   bytes_read = 1;
@@ -27,7 +27,7 @@ char  *get_next_line(int fd)
   {
     if (!buf[0])
       bytes_read = read(fd, buf, BUFFER_SIZE);
-    if (!buf[0] && (!bytes_read || bytes_read < 0))
+    if (!buf[0] && (!bytes_read || bytes_read < 0) && !result)
     {
       free(result);
       return (NULL);
@@ -41,26 +41,26 @@ char  *get_next_line(int fd)
 }
 
 
-int main(int argc, char **argv)
-{
-  int fd;
-
-  if (argc != 2)
-    return (1);
-  fd = open(argv[1], O_RDONLY);
-  if (fd < 0)
-    return (2);
-
-  char  *result = get_next_line(fd);
-  printf("%s", result);
-  free(result);
-  result = get_next_line(fd);
-  printf("%s", result);
-  free(result);
-  result = get_next_line(fd);
-  free(result);
-  printf("%s", result);
-  close(fd);
-  return (0);
-}
-
+// int main(int argc, char **argv)
+// {
+//   int fd;
+// 
+//   if (argc != 2)
+//     return (1);
+//   fd = open(argv[1], O_RDONLY);
+//   if (fd < 0)
+//     return (2);
+// 
+//   char  *result = get_next_line(fd);
+//   printf("%s", result);
+//   free(result);
+//   result = get_next_line(fd);
+//   printf("%s", result);
+//   free(result);
+//   result = get_next_line(fd);
+//   printf("%s", result);
+//   free(result);
+//   close(fd);
+//   return (0);
+// }
+// 
